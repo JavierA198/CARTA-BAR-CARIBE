@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bar Caribe · Carta</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root{
+    --bg:#0b0a08;
+    --panel:#15120d;
+    --panel-2:#1c1810;
+    --gold:#c9a24b;
+    --gold-soft:#8a6d3b;
+    --cream:#f2e9d8;
+    --copper:#b8632f;
+    --muted:#a89a7c;
+    --line: rgba(201,162,75,0.35);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--cream);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation:none !important; transition:none !important;}
+  }
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;}
+
+  @keyframes riseIn{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);}}
+  @keyframes shellFloat{0%,100%{transform:translateY(0) rotate(0deg);} 50%{transform:translateY(-4px) rotate(-3deg);}}
+  @keyframes viewEnter{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+
+  .view.enter{animation:viewEnter .45s ease both;}
+
+  /* ---------- TOPBAR ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:40;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 18px;
+    background:rgba(11,10,8,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .hamburger{
+    background:none;border:1px solid var(--line);border-radius:8px;
+    width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+    cursor:pointer;color:var(--gold);
+  }
+  .hamburger svg{width:18px;height:18px;}
+  .topbar-word{
+    font-family:'Fraunces',serif; font-weight:600; letter-spacing:0.14em;
+    font-size:14px; text-transform:uppercase; color:var(--cream);
+    display:flex; flex-direction:column; align-items:center; line-height:1.15;
+  }
+  .topbar-word small{font-size:9px; letter-spacing:0.3em; color:var(--gold-soft);}
+  .monogram{
+    width:36px;height:36px;border-radius:50%;
+    border:1px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:11px;letter-spacing:0.06em;
+    color:var(--gold);
+  }
+
+  /* ---------- NAV DRAWER ---------- */
+  .nav-overlay{
+    position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:45;
+    opacity:0;pointer-events:none;transition:opacity .25s ease;
+  }
+  .nav-overlay.open{opacity:1;pointer-events:auto;}
+  .nav-drawer{
+    position:fixed; top:0; right:0; height:100%; width:78%; max-width:300px;
+    background:var(--panel); border-left:1px solid var(--line);
+    z-index:50; padding:22px 20px; transform:translateX(100%);
+    transition:transform .3s ease;
+    display:flex;flex-direction:column;gap:4px;
+  }
+  .nav-drawer.open{transform:translateX(0);}
+  .close-nav{
+    align-self:flex-end; background:none;border:none;color:var(--muted);
+    font-size:20px;cursor:pointer;margin-bottom:16px;
+  }
+  .nav-drawer a{
+    display:flex;align-items:center;gap:10px;
+    padding:12px 8px; font-size:14px; letter-spacing:0.03em;
+    color:var(--cream); border-bottom:1px solid rgba(201,162,75,0.12);
+  }
+  .nav-drawer a svg{width:16px;height:16px;stroke:var(--gold);flex:0 0 auto;}
+  .nav-drawer a.current{color:var(--gold);}
+
+  /* ---------- SHARED ---------- */
+  main.view{max-width:640px;margin:0 auto;padding:0 18px 10px;}
+  .breadcrumb{
+    display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+    font-size:11.5px; color:var(--muted); letter-spacing:0.03em;
+    padding:16px 0 4px;
+  }
+  .breadcrumb a{color:var(--muted);}
+  .breadcrumb a:hover{color:var(--gold);}
+  .breadcrumb .sep{opacity:0.5;}
+  .breadcrumb .current{color:var(--gold);}
+
+  /* ---------- HOME HERO ---------- */
+  .hero{
+    position:relative;
+    padding:52px 0 30px;
+    text-align:center;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(201,162,75,0.10), transparent 45%),
+      radial-gradient(circle at 80% 30%, rgba(184,99,47,0.08), transparent 40%),
+      var(--bg);
+    border-bottom:1px solid var(--line);
+  }
+  .hero-logo{
+    display:block; width:min(440px,86%); height:auto; margin:0 auto 4px;
+    filter:drop-shadow(0 0 26px rgba(201,162,75,0.14));
+    animation:riseIn 1s ease forwards;
+  }
+  .hero .place{
+    font-family:'Fraunces',serif; font-style:italic; font-size:14px;
+    color:var(--muted); letter-spacing:0.06em; margin:2px 0 22px;
+  }
+  .hero-actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap;}
+  .btn{
+    padding:12px 22px; border-radius:999px; font-size:12.5px;
+    letter-spacing:0.1em; text-transform:uppercase; cursor:pointer;
+    border:1px solid var(--gold); transition:transform .2s ease, background .2s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-solid{background:var(--gold); color:#1a1408;}
+  .btn-outline{background:transparent; color:var(--cream);}
+  .camino-note{
+    margin-top:24px; font-size:12px; color:var(--muted); max-width:340px;
+    margin-left:auto; margin-right:auto; line-height:1.6;
+  }
+
+  /* ---------- CATEGORY GRID ---------- */
+  .menu-grid-wrap{padding:38px 0 10px;}
+  .menu-grid-wrap h2{
+    font-family:'Fraunces',serif; font-weight:600; font-size:22px;
+    text-align:center; margin:0 0 4px;
+  }
+  .grid-sub{text-align:center; font-size:12px; color:var(--muted); margin:0 0 22px;}
+  .cat-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  }
+  .cat-card{
+    background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    padding:20px 14px; text-align:center; cursor:pointer;
+    transition:border-color .2s ease, transform .2s ease, background .2s ease;
+  }
+  .cat-card:hover{border-color:var(--gold); transform:translateY(-3px); background:var(--panel-2);}
+  .cat-card svg{width:26px;height:26px; stroke:var(--gold); margin-bottom:10px;}
+  .cat-card .name{display:block; font-size:13.5px; font-weight:600; color:var(--cream); letter-spacing:0.02em;}
+  .cat-card .desc{display:block; font-size:11px; color:var(--muted); margin-top:3px;}
+
+  /* ---------- PROMO CARD (home) ---------- */
+  .promo{
+    margin:34px 0 8px; text-align:center;
+    background:linear-gradient(180deg, var(--panel), var(--panel-2));
+    border:1px solid var(--line); border-radius:10px; padding:28px 20px;
+  }
+  .promo .shell{width:34px;height:34px; stroke:var(--gold); fill:none; animation:shellFloat 5s ease-in-out infinite; margin-bottom:10px;}
+  .promo h3{font-family:'Fraunces',serif; font-size:19px; margin:0 0 6px;}
+  .promo p{font-size:13px; color:var(--muted); margin:0 0 4px;}
+  .promo .price{font-family:'Bebas Neue',sans-serif; font-size:34px; letter-spacing:0.05em; color:var(--gold); margin-top:8px;}
+
+  /* ---------- CATEGORY VIEW ---------- */
+  .cat-head{display:flex; align-items:center; gap:10px; margin:6px 0 2px;}
+  .cat-head svg{width:20px;height:20px; stroke:var(--gold);}
+  .cat-head h1{font-family:'Fraunces',serif; font-weight:600; font-size:26px; margin:0;}
+  .cat-note{font-size:12px; color:var(--muted); margin:2px 0 20px;}
+
+  .item{
+    display:flex; align-items:center; gap:12px;
+    padding:12px 6px; margin:0 -6px; border-radius:8px;
+    border-bottom:1px solid rgba(201,162,75,0.10);
+    transition:background .2s ease;
+  }
+  .item:last-child{border-bottom:none;}
+  .item:hover{background:rgba(201,162,75,0.06);}
+  .item-icon{
+    flex:0 0 auto; width:46px;height:46px;border-radius:8px;
+    background:var(--panel); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    position:relative; overflow:hidden;
+  }
+  .item-icon svg{width:20px;height:20px; stroke:var(--gold);}
+  .item-icon img{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; border-radius:8px;
+  }
+  .item-body{flex:1; min-width:0;}
+  .item-name{font-size:14.5px; color:var(--cream); font-weight:600; line-height:1.35;}
+  .item-desc{display:block; font-size:12px; color:var(--muted); margin-top:2px; font-weight:400;}
+  .item-price{font-weight:700; font-size:14px; color:var(--gold); white-space:nowrap; flex:0 0 auto;}
+
+  /* combo card + desayuno reuse */
+  .card{margin:22px 0; background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:22px 18px;}
+  .card h3{font-family:'Fraunces',serif; font-size:16px; letter-spacing:0.05em; text-transform:uppercase; color:var(--gold); margin:0 0 4px;}
+  .card .note{font-size:11px; color:var(--muted); margin:0 0 14px;}
+  .combo-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media(max-width:420px){.combo-grid{grid-template-columns:1fr;}}
+  .combo-col h4{font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin:0 0 8px;}
+  .combo-col .row{display:flex; justify-content:space-between; font-size:13.5px; padding:5px 0;}
+  .combo-col .row span:last-child{color:var(--gold);}
+  .combo-supl{margin-top:12px; font-size:11.5px; color:var(--muted); font-style:italic;}
+  .desayuno-split{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:12px;}
+  @media(max-width:420px){.desayuno-split{grid-template-columns:1fr;}}
+  .desayuno-split .col{font-size:12.5px; line-height:1.6;}
+  .desayuno-split .col b{color:var(--gold); display:block; font-size:10.5px; letter-spacing:0.1em; margin-bottom:5px; text-transform:uppercase;}
+  .desayuno-extra{margin-top:12px; font-size:11.5px; color:var(--muted); text-align:center; font-style:italic;}
+
+  /* ---------- FOOTER ---------- */
+  footer{text-align:center; padding:44px 20px 54px; color:var(--muted); max-width:640px; margin:0 auto;}
+  footer .foot-word{font-family:'Fraunces',serif; font-weight:600; letter-spacing:0.16em; font-size:13px; text-transform:uppercase; color:var(--cream);}
+  footer .foot-tag{font-size:10px; letter-spacing:0.12em; color:var(--gold-soft); margin-top:4px;}
+  footer .monogram{margin:16px auto;}
+  footer .addr{font-size:12.5px; color:var(--cream); letter-spacing:0.03em; margin-top:6px;}
+  footer .allergen-note{
+    max-width:400px; margin:20px auto 0; font-size:11px; line-height:1.6; color:var(--muted);
+    border-top:1px solid var(--line); padding-top:16px;
+  }
+
+  ::selection{background:var(--gold); color:#000;}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-6 8 6"/><path d="M6 10v9h12v-9"/></symbol>
+    <symbol id="i-bowl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11h18a9 9 0 0 1-18 0Z"/><path d="M9 6c0-1 .8-2 1-3M12 6c0-1 .8-2 1-3M15 6c0-1 .8-2 1-3"/></symbol>
+    <symbol id="i-cloche" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16h16"/><path d="M5 16a7 7 0 0 1 14 0"/><path d="M12 9V6"/><circle cx="12" cy="5" r="1"/></symbol>
+    <symbol id="i-sandwich" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18l-2 4H5l-2-4Z"/><path d="M4 10c1-3 4-5 8-5s7 2 8 5"/><path d="M4 14l1 3h14l1-3"/></symbol>
+    <symbol id="i-burger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11c0-3 3.5-5 8-5s8 2 8 5"/><path d="M3 11h18"/><path d="M4 14h16"/><path d="M3 17h18l-1.5 2h-15L3 17Z"/></symbol>
+    <symbol id="i-plate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></symbol>
+    <symbol id="i-combo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l7 4"/></symbol>
+    <symbol id="i-dessert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l-1 4H7L6 3Z"/><path d="M8 7c-1 4 1 7 4 7s5-3 4-7"/><path d="M12 14v6"/><path d="M9 20h6"/></symbol>
+    <symbol id="i-shell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2C7 6 3 10 3 15c0 1.5.8 2.5 2 2.5.9 0 1.3-.7 1.6-1.8C7 14 7.6 12 9 12c1.1 0 1.6 1.4 1.9 3 .3 1.6.6 3 1.1 3s.8-1.4 1.1-3C13.4 13.4 13.9 12 15 12c1.4 0 2 2 2.4 3.7.3 1.1.7 1.8 1.6 1.8 1.2 0 2-1 2-2.5C21 10 17 6 12 2Z"/><path d="M12 17.5V22"/></symbol>
+    <symbol id="i-coffee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h12v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8Z"/><path d="M16 9h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8 3c0 1-1 1-1 2M12 3c0 1-1 1-1 2"/></symbol>
+  </defs>
+</svg>
+
+<header class="topbar">
+  <button class="hamburger" onclick="toggleNav()" aria-label="Abrir menú"><svg><use href="#i-menu"/></svg></button>
+  <a href="#home" class="topbar-word">BAR<br><small>CARIBE</small></a>
+  <span class="monogram">BC</span>
+</header>
+
+<div class="nav-overlay" id="navOverlay" onclick="toggleNav()"></div>
+<nav class="nav-drawer" id="navDrawer">
+  <button class="close-nav" onclick="toggleNav()">✕</button>
+  <a href="#home" onclick="toggleNav()"><svg><use href="#i-home"/></svg>Inicio</a>
+  <a href="#cat-picar" onclick="toggleNav()"><svg><use href="#i-bowl"/></svg>Para picar</a>
+  <a href="#cat-cazuelitas" onclick="toggleNav()"><svg><use href="#i-cloche"/></svg>Cazuelitas</a>
+  <a href="#cat-bocadillos" onclick="toggleNav()"><svg><use href="#i-sandwich"/></svg>Bocadillos</a>
+  <a href="#cat-smash" onclick="toggleNav()"><svg><use href="#i-burger"/></svg>Hamburguesas Smash</a>
+  <a href="#cat-platos" onclick="toggleNav()"><svg><use href="#i-plate"/></svg>Platos</a>
+  <a href="#cat-combinado" onclick="toggleNav()"><svg><use href="#i-combo"/></svg>Plato combinado</a>
+  <a href="#cat-dulces" onclick="toggleNav()"><svg><use href="#i-dessert"/></svg>Sorbetes &amp; smoothies</a>
+  <a href="#cat-peregrina" onclick="toggleNav()"><svg><use href="#i-shell"/></svg>Comida peregrina</a>
+  <a href="#cat-desayuno" onclick="toggleNav()"><svg><use href="#i-coffee"/></svg>Desayuno</a>
+</nav>
+
+<!-- ===================== HOME ===================== -->
+<main class="view" id="view-home">
+  <section class="hero">
+    <img class="hero-logo" src="logo.png" alt="Bar Caribe — Sabores, copas y buenos momentos">
+    <p class="place">Nájera &middot; La Rioja</p>
+    <div class="hero-actions">
+      <a class="btn btn-solid" href="#menu-grid" onclick="document.getElementById('menu-grid').scrollIntoView({behavior:'smooth'})">Ver carta</a>
+      <a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&query=Bar+Caribe+C%2F+San+Fernando+107+N%C3%A1jera" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+    <p class="camino-note">Junto al Camino Francés — la vieira marca cada tramo de esta carta, igual que marca la ruta hasta Santiago.</p>
+  </section>
+
+  <div class="menu-grid-wrap" id="menu-grid">
+    <h2>Nuestra carta</h2>
+    <p class="grid-sub">Elige una categoría</p>
+    <div class="cat-grid">
+      <a class="cat-card" href="#cat-picar"><svg><use href="#i-bowl"/></svg><span class="name">Para picar</span><span class="desc">Para compartir</span></a>
+      <a class="cat-card" href="#cat-bocadillos"><svg><use href="#i-sandwich"/></svg><span class="name">Bocadillos</span><span class="desc">Clásicos y especiales</span></a>
+      <a class="cat-card" href="#cat-smash"><svg><use href="#i-burger"/></svg><span class="name">Hamburguesas</span><span class="desc">Estilo smash</span></a>
+      <a class="cat-card" href="#cat-platos"><svg><use href="#i-plate"/></svg><span class="name">Platos</span><span class="desc">Para comer con calma</span></a>
+      <a class="cat-card" href="#cat-cazuelitas"><svg><use href="#i-cloche"/></svg><span class="name">Cazuelitas</span><span class="desc">Media o entera</span></a>
+      <a class="cat-card" href="#cat-combinado"><svg><use href="#i-combo"/></svg><span class="name">Combinado</span><span class="desc">Elige y combina</span></a>
+      <a class="cat-card" href="#cat-dulces"><svg><use href="#i-dessert"/></svg><span class="name">Sorbetes</span><span class="desc">Y smoothies</span></a>
+      <a class="cat-card" href="#cat-desayuno"><svg><use href="#i-coffee"/></svg><span class="name">Desayunos</span><span class="desc">Empieza el día</span></a>
+    </div>
+
+    <div class="promo">
+      <svg class="shell"><use href="#i-shell"/></svg>
+      <h3>La comida peregrina</h3>
+      <p>1º plato + 2º plato + café</p>
+      <p class="price">15,50 €</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- ===================== PARA PICAR ===================== -->
+<main class="view" id="view-cat-picar" hidden>
+  <nav class="breadcrumb"><a href="#home">Inicio</a><span class="sep">›</span><span class="current">Para picar</span></nav>
+  <div class="cat-head"><svg><use href="#i-bowl"/></svg><h1>Para picar</h1></div>
+  <p class="cat-note">Para compartir en el centro de la mesa</p>
+
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/fingers-de-pollo.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Fingers de pollo</span></div><span class="item-price">8,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/pimientos-rellenos-de-bacalao.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Pimientos rellenos de bacalao</span></div><span class="item-price">11,90 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/albondigas-con-salsa-de-piquillo.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Albóndigas con salsa de piquillo</span></div><span class="item-price">9,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/pimientos-del-padron-fritos.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Pimientos del padrón fritos</span></div><span class="item-price">7,00 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/piparra-en-tempura.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Piparra en tempura</span></div><span class="item-price">7,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/ensalada-de-tomate-atun-cebolla-fresca-y-piparra.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Ensalada de tomate, atún, cebolla fresca y piparra</span></div><span class="item-price">10,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/chorizo-dulce-y-picante-asado.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Chorizo dulce y picante asado</span></div><span class="item-price">8,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/croquetas-de-jamon-6-uds.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Croquetas de jamón (6 uds.)</span></div><span class="item-price">9,90 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/patatas-bravas.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Patatas bravas</span></div><span class="item-price">6,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/patatas-con-alioli-y-aceite-de-albahaca.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Patatas con alioli y aceite de albahaca</span></div><span class="item-price">6,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/papas-arrugadas-con-mojo-picon.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Papas arrugadas con mojo picón</span></div><span class="item-price">7,00 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/tequenos-con-mermelada-de-piquillo.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Tequeños con mermelada de piquillo</span></div><span class="item-price">9,90 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/nachos-con-guacamole-pico-de-gallo-y-cheddar.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Nachos con guacamole, pico de gallo y cheddar</span></div><span class="item-price">9,90 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/tabla-de-quesos-con-membrillo-y-nueces.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Tabla de quesos con membrillo y nueces</span></div><span class="item-price">14,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/tabla-de-embutidos-con-colines.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Tabla de embutidos con colines</span></div><span class="item-price">15,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/ensaladilla-de-atun.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Ensaladilla de atún</span></div><span class="item-price">8,00 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/ensaladilla-de-pollo.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Ensaladilla de pollo</span></div><span class="item-price">8,00 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/morcilla-con-pimientos.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Morcilla con pimientos</span></div><span class="item-price">8,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/empanada-de-verduras-y-mejillones.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Empanada de verduras y mejillones</span></div><span class="item-price">9,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/brocheta-de-pollo-al-chimichurri-2-uds.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Brocheta de pollo al chimichurri (2 uds.)</span></div><span class="item-price">9,00 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/brocheta-de-pollo-al-curry-2-uds.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Brocheta de pollo al curry (2 uds.)</span></div><span class="item-price">9,00 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-bowl"/></svg><img src="imagenes/brocheta-de-gamba-con-pina-2-uds.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Brocheta de gamba con piña (2 uds.)</span></div><span class="item-price">11,50 €</span></div>
+</main>
+
+<!-- ===================== CAZUELITAS ===================== -->
+<main class="view" id="view-cat-cazuelitas" hidden>
+  <nav class="breadcrumb"><a href="#home">Inicio</a><span class="sep">›</span><span class="current">Cazuelitas</span></nav>
+  <div class="cat-head"><svg><use href="#i-cloche"/></svg><h1>Cazuelitas</h1></div>
+  <p class="cat-note">Media ración / ración entera</p>
+
+  <div class="item"><div class="item-icon"><svg><use href="#i-cloche"/></svg><img src="imagenes/callos.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Callos</span></div><span class="item-price">5 / 9,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-cloche"/></svg><img src="imagenes/patatas-a-la-riojana.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Patatas a la riojana</span></div><span class="item-price">5 / 9,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-cloche"/></svg><img src="imagenes/manitas.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Manitas</span></div><span class="item-price">6 / 10,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-cloche"/></svg><img src="imagenes/albondigas-con-patatas.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Albóndigas con patatas</span></div><span class="item-price">5 / 9,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-cloche"/></svg><img src="imagenes/picadillo-con-patatas-y-huevo.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Picadillo con patatas y huevo</span></div><span class="item-price">5 / 9,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-cloche"/></svg><img src="imagenes/pota-en-salsa-encebollada.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Pota en salsa encebollada</span></div><span class="item-price">6 / 10,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-cloche"/></svg><img src="imagenes/champis-en-salsa.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Champis en salsa</span></div><span class="item-price">4,50 / 8,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-cloche"/></svg><img src="imagenes/oreja-adobada.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Oreja adobada</span></div><span class="item-price">4,50 / 8,50 €</span></div>
+</main>
+
+<!-- ===================== BOCADILLOS ===================== -->
+<main class="view" id="view-cat-bocadillos" hidden>
+  <nav class="breadcrumb"><a href="#home">Inicio</a><span class="sep">›</span><span class="current">Bocadillos</span></nav>
+  <div class="cat-head"><svg><use href="#i-sandwich"/></svg><h1>Bocadillos</h1></div>
+  <p class="cat-note">Incluyen guarnición de patatas · suplemento de huevo +1,00 €</p>
+
+  <div class="item"><div class="item-icon"><svg><use href="#i-sandwich"/></svg><img src="imagenes/pulled-pork-con-queso-de-cabra-y-cebolla-caramelizada.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Pulled pork con queso de cabra y cebolla caramelizada</span></div><span class="item-price">10,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-sandwich"/></svg><img src="imagenes/chistorra-con-pimientos-verdes.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Chistorra con pimientos verdes</span></div><span class="item-price">8,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-sandwich"/></svg><img src="imagenes/calamares-con-alioli.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Calamares con alioli</span></div><span class="item-price">10,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-sandwich"/></svg><img src="imagenes/pollo-empanado-con-aguacate-y-tomate.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Pollo empanado con aguacate y tomate</span></div><span class="item-price">9,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-sandwich"/></svg><img src="imagenes/pollo-deshilachado-con-barbacoa.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Pollo deshilachado con barbacoa</span></div><span class="item-price">8,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-sandwich"/></svg><img src="imagenes/lomo-adobado-con-pimiento-asado-y-bacon-crujiente.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Lomo adobado con pimiento asado y bacon crujiente</span></div><span class="item-price">9,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-sandwich"/></svg><img src="imagenes/lomo-bacon-y-queso.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Lomo, bacon y queso</span></div><span class="item-price">8,90 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-sandwich"/></svg><img src="imagenes/vegetal-de-atun.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Vegetal de atún</span></div><span class="item-price">8,00 €</span></div>
+</main>
+
+<!-- ===================== HAMBURGUESAS SMASH ===================== -->
+<main class="view" id="view-cat-smash" hidden>
+  <nav class="breadcrumb"><a href="#home">Inicio</a><span class="sep">›</span><span class="current">Hamburguesas Smash</span></nav>
+  <div class="cat-head"><svg><use href="#i-burger"/></svg><h1>Hamburguesas Smash</h1></div>
+  <p class="cat-note">Incluyen guarnición de patatas · suplemento de huevo +1,00 € · doble carne +2,50 € (240 g)</p>
+
+  <div class="item"><div class="item-icon"><svg><use href="#i-burger"/></svg><img src="imagenes/la-tres-quesos.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">La Tres Quesos<span class="item-desc">Vaca, bacon crujiente y salsa de tres quesos: cheddar, edam y mozzarella</span></span></div><span class="item-price">11,90 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-burger"/></svg><img src="imagenes/la-bourbon.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">La Bourbon<span class="item-desc">Vaca, salsa bourbon flameada, champiñón laminado, bacon crujiente y queso edam</span></span></div><span class="item-price">12,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-burger"/></svg><img src="imagenes/la-piquillo.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">La Piquillo<span class="item-desc">Vaca, queso de cabra, cebolla caramelizada y mermelada de pimientos de piquillo</span></span></div><span class="item-price">11,90 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-burger"/></svg><img src="imagenes/la-pulled.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">La Pulled<span class="item-desc">Vaca, pulled pork, cheddar y reeles de pepinillo</span></span></div><span class="item-price">12,90 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-burger"/></svg><img src="imagenes/la-crispy-cesar.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">La Crispy César<span class="item-desc">Pollo crujiente, lechuga, tomate, aguacate y salsa césar</span></span></div><span class="item-price">11,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-burger"/></svg><img src="imagenes/cheeseburger.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Cheeseburger<span class="item-desc">Vaca, cheddar, pepinillo, cebolla y salsa burger</span></span></div><span class="item-price">10,90 €</span></div>
+</main>
+
+<!-- ===================== PLATOS ===================== -->
+<main class="view" id="view-cat-platos" hidden>
+  <nav class="breadcrumb"><a href="#home">Inicio</a><span class="sep">›</span><span class="current">Platos</span></nav>
+  <div class="cat-head"><svg><use href="#i-plate"/></svg><h1>Platos</h1></div>
+  <p class="cat-note">Para sentarse a comer con calma</p>
+
+  <div class="item"><div class="item-icon"><svg><use href="#i-plate"/></svg><img src="imagenes/sepia-a-la-plancha-con-ajo-perejil-alioli-y-ensalada.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Sepia a la plancha con ajo perejil, alioli y ensalada</span></div><span class="item-price">16,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-plate"/></svg><img src="imagenes/pulpo-con-parmentier-y-aceite-de-pimenton.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Pulpo con parmentier y aceite de pimentón</span></div><span class="item-price">19,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-plate"/></svg><img src="imagenes/entrecot-de-lomo-bajo-con-patatas-fritas-y-pimientos-del-piquillo.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Entrecot de lomo bajo con patatas fritas y pimientos del piquillo</span></div><span class="item-price">18,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-plate"/></svg><img src="imagenes/bacalao-confitado-con-patatas.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Bacalao confitado con patatas</span></div><span class="item-price">16,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-plate"/></svg><img src="imagenes/pimientos-rellenos-de-bacalao-con-salsa-verde-y-patatas-fritas.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Pimientos rellenos de bacalao con salsa verde y patatas fritas</span></div><span class="item-price">14,90 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-plate"/></svg><img src="imagenes/calamar-a-la-plancha-con-ensalada.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Calamar a la plancha con ensalada</span></div><span class="item-price">15,50 €</span></div>
+</main>
+
+<!-- ===================== PLATO COMBINADO ===================== -->
+<main class="view" id="view-cat-combinado" hidden>
+  <nav class="breadcrumb"><a href="#home">Inicio</a><span class="sep">›</span><span class="current">Plato combinado</span></nav>
+  <div class="cat-head"><svg><use href="#i-combo"/></svg><h1>Plato combinado</h1></div>
+  <p class="cat-note">Elige 1 principal + 3 acompañantes</p>
+
+  <div class="card">
+    <div class="combo-grid">
+      <div class="combo-col">
+        <h4>Principal</h4>
+        <div class="row"><span>Pechuga de pollo empanada</span><span>12,50 €</span></div>
+        <div class="row"><span>Lomo de cerdo adobado</span><span>12,50 €</span></div>
+        <div class="row"><span>Merluza empanada</span><span>12,50 €</span></div>
+      </div>
+      <div class="combo-col">
+        <h4>Acompañantes</h4>
+        <div class="row"><span>Patatas fritas</span></div>
+        <div class="row"><span>Croquetas de jamón</span></div>
+        <div class="row"><span>Pimientos verdes</span></div>
+        <div class="row"><span>Pimientos del piquillo</span></div>
+        <div class="row"><span>Ensalada</span></div>
+        <div class="row"><span>Huevo frito</span></div>
+        <div class="row"><span>Arroz blanco</span></div>
+        <div class="row"><span>Verduras a la plancha</span></div>
+      </div>
+    </div>
+    <p class="combo-supl">Suplementos: Fingers +1,50 € · Calamares +2,00 €</p>
+  </div>
+</main>
+
+<!-- ===================== SORBETES Y SMOOTHIES ===================== -->
+<main class="view" id="view-cat-dulces" hidden>
+  <nav class="breadcrumb"><a href="#home">Inicio</a><span class="sep">›</span><span class="current">Sorbetes &amp; smoothies</span></nav>
+  <div class="cat-head"><svg><use href="#i-dessert"/></svg><h1>Sorbetes &amp; smoothies</h1></div>
+  <p class="cat-note">Sorbetes</p>
+  <div class="item"><div class="item-icon"><svg><use href="#i-dessert"/></svg><img src="imagenes/limon-con-cava.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Limón con cava</span></div><span class="item-price">5,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-dessert"/></svg><img src="imagenes/fresa-con-vodka.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Fresa con vodka</span></div><span class="item-price">5,50 €</span></div>
+
+  <p class="cat-note" style="margin-top:26px;">Smoothies · a elegir entre zumo o leche</p>
+  <div class="item"><div class="item-icon"><svg><use href="#i-dessert"/></svg><img src="imagenes/arandanos.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Arándanos</span></div><span class="item-price">4,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-dessert"/></svg><img src="imagenes/fresa-platano.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Fresa plátano</span></div><span class="item-price">4,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-dessert"/></svg><img src="imagenes/frambuesa-y-mango.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Frambuesa y mango</span></div><span class="item-price">4,50 €</span></div>
+  <div class="item"><div class="item-icon"><svg><use href="#i-dessert"/></svg><img src="imagenes/pina-y-mango.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="item-body"><span class="item-name">Piña y mango</span></div><span class="item-price">4,50 €</span></div>
+</main>
+
+<!-- ===================== COMIDA PEREGRINA ===================== -->
+<main class="view" id="view-cat-peregrina" hidden>
+  <nav class="breadcrumb"><a href="#home">Inicio</a><span class="sep">›</span><span class="current">Comida peregrina</span></nav>
+  <div class="promo" style="margin-top:16px;">
+    <svg class="shell"><use href="#i-shell"/></svg>
+    <h3>La comida peregrina</h3>
+    <p>1º plato + 2º plato + café</p>
+    <p class="price">15,50 €</p>
+  </div>
+</main>
+
+<!-- ===================== DESAYUNO ===================== -->
+<main class="view" id="view-cat-desayuno" hidden>
+  <nav class="breadcrumb"><a href="#home">Inicio</a><span class="sep">›</span><span class="current">Desayuno</span></nav>
+  <div class="cat-head"><svg><use href="#i-coffee"/></svg><h1>Desayuno Caribe</h1></div>
+  <div class="card">
+    <h3 style="text-align:center;font-size:20px;">3,50 €</h3>
+    <div class="desayuno-split">
+      <div class="col"><b>Dulce</b>Café o infusión + bollería o tostada con mantequilla y mermelada</div>
+      <div class="col"><b>Salado</b>Café o infusión + tostada con tomate y AOVE<br><span style="color:var(--gold)">Con jamón +4,50 €</span></div>
+    </div>
+    <p class="desayuno-extra">Zumo de naranja +1,00 €</p>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-word">BAR CARIBE</div>
+  <div class="foot-tag">SABORES, COPAS Y BUENOS MOMENTOS</div>
+  <div class="monogram">BC</div>
+  <p class="addr">C/ San Fernando, 107 · Nájera, La Rioja</p>
+  <!-- Para añadir Instagram u otras redes, descomenta y pon el enlace real:
+  <p style="margin-top:10px;"><a href="https://instagram.com/TU_USUARIO" target="_blank" rel="noopener" style="color:var(--gold);">@TU_USUARIO</a></p>
+  -->
+  <p class="allergen-note">Algunos platos pueden contener alérgenos (gluten, lácteos, huevo, pescado, marisco, frutos secos u otros). Consulta con nuestro personal antes de pedir si tienes alguna alergia o intolerancia.</p>
+</footer>
+
+<script>
+  function toggleNav(){
+    document.getElementById('navDrawer').classList.toggle('open');
+    document.getElementById('navOverlay').classList.toggle('open');
+  }
+
+  const views = document.querySelectorAll('main.view');
+  function route(){
+    const hash = location.hash || '#home';
+    const targetId = 'view-' + hash.slice(1);
+    views.forEach(v => {
+      if (v.id === targetId){
+        v.hidden = false;
+        v.classList.remove('enter'); void v.offsetWidth; v.classList.add('enter');
+      } else {
+        v.hidden = true;
+      }
+    });
+    document.querySelectorAll('.nav-drawer a').forEach(a=>{
+      a.classList.toggle('current', a.getAttribute('href') === hash);
+    });
+    window.scrollTo({top:0, behavior:'instant'});
+  }
+  window.addEventListener('hashchange', route);
+  route();
+</script>
+
+</body>
+</html>
