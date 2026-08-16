@@ -1,0 +1,56 @@
+Fingers de pollo  ->  imagenes/fingers-de-pollo.jpg
+Pimientos rellenos de bacalao  ->  imagenes/pimientos-rellenos-de-bacalao.jpg
+Albóndigas con salsa de piquillo  ->  imagenes/albondigas-con-salsa-de-piquillo.jpg
+Pimientos del padrón fritos  ->  imagenes/pimientos-del-padron-fritos.jpg
+Piparra en tempura  ->  imagenes/piparra-en-tempura.jpg
+Ensalada de tomate, atún, cebolla fresca y piparra  ->  imagenes/ensalada-de-tomate-atun-cebolla-fresca-y-piparra.jpg
+Chorizo dulce y picante asado  ->  imagenes/chorizo-dulce-y-picante-asado.jpg
+Croquetas de jamón (6 uds.)  ->  imagenes/croquetas-de-jamon-6-uds.jpg
+Patatas bravas  ->  imagenes/patatas-bravas.jpg
+Patatas con alioli y aceite de albahaca  ->  imagenes/patatas-con-alioli-y-aceite-de-albahaca.jpg
+Papas arrugadas con mojo picón  ->  imagenes/papas-arrugadas-con-mojo-picon.jpg
+Tequeños con mermelada de piquillo  ->  imagenes/tequenos-con-mermelada-de-piquillo.jpg
+Nachos con guacamole, pico de gallo y cheddar  ->  imagenes/nachos-con-guacamole-pico-de-gallo-y-cheddar.jpg
+Tabla de quesos con membrillo y nueces  ->  imagenes/tabla-de-quesos-con-membrillo-y-nueces.jpg
+Tabla de embutidos con colines  ->  imagenes/tabla-de-embutidos-con-colines.jpg
+Ensaladilla de atún  ->  imagenes/ensaladilla-de-atun.jpg
+Ensaladilla de pollo  ->  imagenes/ensaladilla-de-pollo.jpg
+Morcilla con pimientos  ->  imagenes/morcilla-con-pimientos.jpg
+Empanada de verduras y mejillones  ->  imagenes/empanada-de-verduras-y-mejillones.jpg
+Brocheta de pollo al chimichurri (2 uds.)  ->  imagenes/brocheta-de-pollo-al-chimichurri-2-uds.jpg
+Brocheta de pollo al curry (2 uds.)  ->  imagenes/brocheta-de-pollo-al-curry-2-uds.jpg
+Brocheta de gamba con piña (2 uds.)  ->  imagenes/brocheta-de-gamba-con-pina-2-uds.jpg
+Callos  ->  imagenes/callos.jpg
+Patatas a la riojana  ->  imagenes/patatas-a-la-riojana.jpg
+Manitas  ->  imagenes/manitas.jpg
+Albóndigas con patatas  ->  imagenes/albondigas-con-patatas.jpg
+Picadillo con patatas y huevo  ->  imagenes/picadillo-con-patatas-y-huevo.jpg
+Pota en salsa encebollada  ->  imagenes/pota-en-salsa-encebollada.jpg
+Champis en salsa  ->  imagenes/champis-en-salsa.jpg
+Oreja adobada  ->  imagenes/oreja-adobada.jpg
+Pulled pork con queso de cabra y cebolla caramelizada  ->  imagenes/pulled-pork-con-queso-de-cabra-y-cebolla-caramelizada.jpg
+Chistorra con pimientos verdes  ->  imagenes/chistorra-con-pimientos-verdes.jpg
+Calamares con alioli  ->  imagenes/calamares-con-alioli.jpg
+Pollo empanado con aguacate y tomate  ->  imagenes/pollo-empanado-con-aguacate-y-tomate.jpg
+Pollo deshilachado con barbacoa  ->  imagenes/pollo-deshilachado-con-barbacoa.jpg
+Lomo adobado con pimiento asado y bacon crujiente  ->  imagenes/lomo-adobado-con-pimiento-asado-y-bacon-crujiente.jpg
+Lomo, bacon y queso  ->  imagenes/lomo-bacon-y-queso.jpg
+Vegetal de atún  ->  imagenes/vegetal-de-atun.jpg
+La Tres Quesos  ->  imagenes/la-tres-quesos.jpg
+La Bourbon  ->  imagenes/la-bourbon.jpg
+La Piquillo  ->  imagenes/la-piquillo.jpg
+La Pulled  ->  imagenes/la-pulled.jpg
+La Crispy César  ->  imagenes/la-crispy-cesar.jpg
+Cheeseburger  ->  imagenes/cheeseburger.jpg
+Sepia a la plancha con ajo perejil, alioli y ensalada  ->  imagenes/sepia-a-la-plancha-con-ajo-perejil-alioli-y-ensalada.jpg
+Pulpo con parmentier y aceite de pimentón  ->  imagenes/pulpo-con-parmentier-y-aceite-de-pimenton.jpg
+Entrecot de lomo bajo con patatas fritas y pimientos del piquillo  ->  imagenes/entrecot-de-lomo-bajo-con-patatas-fritas-y-pimientos-del-piquillo.jpg
+Bacalao confitado con patatas  ->  imagenes/bacalao-confitado-con-patatas.jpg
+Pimientos rellenos de bacalao con salsa verde y patatas fritas  ->  imagenes/pimientos-rellenos-de-bacalao-con-salsa-verde-y-patatas-fritas.jpg
+Calamar a la plancha con ensalada  ->  imagenes/calamar-a-la-plancha-con-ensalada.jpg
+Limón con cava  ->  imagenes/limon-con-cava.jpg
+Fresa con vodka  ->  imagenes/fresa-con-vodka.jpg
+Arándanos  ->  imagenes/arandanos.jpg
+Fresa plátano  ->  imagenes/fresa-platano.jpg
+Frambuesa y mango  ->  imagenes/frambuesa-y-mango.jpg
+Piña y mango  ->  imagenes/pina-y-mango.jpg
